@@ -1,0 +1,35 @@
+-- clicks
+DROP TABLE IF EXISTS vestiaire_co_analytics.clicks; 
+CREATE TABLE vestiaire_co_analytics.clicks (
+    DATETIME_SESSION TIMESTAMP,
+    ID_USER VARCHAR,
+    ID_PRODUCT NUMERIC,
+    EVENT_CATEGORY VARCHAR,
+    EVENT_ACTION VARCHAR,
+    EVENT_LABEL VARCHAR
+);
+
+ALTER TABLE vestiaire_co_analytics.clicks
+ADD COLUMN LISTING_ACTION VARCHAR;
+
+UPDATE vestiaire_co_analytics.clicks
+SET 
+  EVENT_LABEL = REGEXP_REPLACE(EVENT_LABEL, '[^a-zA-Z0-9 ]', '', 'g'),
+  LISTING_ACTION = 
+    CASE 
+      WHEN EVENT_ACTION IN (
+        'start photos',
+        'add photo',
+        'confirm photos',
+        'upload photo',
+        'dismiss photo dialog',
+        'create draft',
+        'delete draft',
+        'select condition',
+        'select universe',
+        'start condition & price',
+        'confirm condition & price',
+        'dismiss confirmation dialog'
+      ) THEN TRUE 
+      ELSE FALSE 
+    END;

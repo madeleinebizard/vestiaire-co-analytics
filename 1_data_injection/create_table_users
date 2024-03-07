@@ -1,0 +1,23 @@
+-- users 
+DROP TABLE IF EXISTS vestiaire_co_analytics.users;
+CREATE TABLE vestiaire_co_analytics.users (
+    ID_CUSTOMER VARCHAR,
+    ID_SELLET VARCHAR
+);
+
+-- Considering a seller as someone that completed the listing of a product
+INSERT INTO vestiaire_co_analytics.users (id_customer, id_seller)
+WITH base_users AS (
+SELECT 
+  id_user,
+  id_customer,
+  MIN(CAST(date_completed AS DATE)) AS first_time_seller
+FROM vestiaire_co_analytics.clicks a
+LEFT JOIN vestiaire_co_analytics.listings b ON a.id_user = b.id_customer
+GROUP BY 1,2
+)
+
+SELECT
+  id_user AS id_customer,
+  CASE WHEN first_time_seller IS NOT NULL THEN id_user END AS id_seller
+FROM base_users

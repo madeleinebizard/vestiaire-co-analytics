@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS vestiaire_co_analytics.listings;
+CREATE TABLE vestiaire_co_analytics.listings (
+    ID INT,
+    ID_CUSTOMER VARCHAR,
+    ID_BRAND INT,
+    ID_CATEGORY INT,
+    DATE_CREATED TIMESTAMP,
+    DATE_COMPLETED TIMESTAMP,
+    DATE_SOLD TIMESTAMP
+);
