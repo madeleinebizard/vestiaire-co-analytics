@@ -1,0 +1,23 @@
+-- Per customer, show number of total listings started, listings completed and listings sold; order by listings started descending
+
+WITH base AS (
+    SELECT
+    a.id_customer,
+    COUNT(b.date_created) AS listing_started,
+    COUNT(b.date_completed) AS listing_completed,
+    COUNT(b.date_sold) AS listing_sold
+    FROM vestiaire_co_analytics.users a
+    LEFT JOIN vestiaire_co_analytics.listings b USING(id_customer)
+    WHERE b.date_created IS NOT NULL
+    GROUP BY 1
+)
+
+SELECT
+    id_customer,
+    listing_started,
+    listing_completed,
+    CONCAT(ROUND((listing_completed::decimal / listing_started::decimal) * 100, 2), '%') AS percentage_listings_completed,
+    listing_sold,
+    CONCAT(ROUND((listing_sold::decimal / listing_started::decimal) * 100, 2), '%') AS percentage_listings_sold
+FROM base
+ORDER BY listing_started DESC;

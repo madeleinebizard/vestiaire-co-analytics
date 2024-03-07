@@ -1,0 +1,38 @@
+-- Per seller: date of their first listing, date of their last listing, date of last sale and name of last action (completed list / sale)
+
+WITH listings AS (
+    SELECT
+        -- reminder : a seller is a user that completed at least one listing
+        a.id_seller,
+        MIN(CAST(b.date_completed AS DATE)) AS first_listing,
+        MAX(CAST(b.date_completed AS DATE)) AS last_listing,
+        COALESCE(MAX(CAST(CAST(b.date_sold AS DATE) AS VARCHAR)), 'never sold') AS last_sale
+    FROM vestiaire_co_analytics.users a
+    LEFT JOIN vestiaire_co_analytics.listings b ON a.id_seller = b.id_customer
+    WHERE a.id_seller IS NOT NULL
+    GROUP BY 1
+),
+
+clicks AS (
+    SELECT 
+        *
+    FROM (
+        SELECT
+        DISTINCT id_user,
+        event_action,
+        datetime_session,
+        ROW_NUMBER() OVER (PARTITION BY id_user ORDER BY datetime_session DESC) AS datetime_row_number
+    FROM vestiaire_co_analytics.clicks
+    ORDER BY 1, 4
+    )
+WHERE datetime_row_number = 1
+)
+
+SELECT
+    a.id_seller,
+    a.first_listing,
+    a.last_listing,
+    a.last_sale,
+    b.event_action
+FROM listings a
+LEFT JOIN clicks b ON a.id_seller = b.id_user

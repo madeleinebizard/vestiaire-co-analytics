@@ -1,0 +1,15 @@
+-- b) Per customer, if True or False they listed items in Clothing, Bags, Shoes and Accessories categories
+
+SELECT
+    id_customer,
+    CASE WHEN listed_items > 0 THEN TRUE ELSE FALSE END AS listed_items
+FROM (
+SELECT
+    a.id_customer,
+    SUM(CASE WHEN c.category IN ('Clothing', 'Bags', 'Shoes', 'Accessories') THEN 1 ELSE 0 END) AS listed_items
+FROM vestiaire_co_analytics.users a
+LEFT JOIN vestiaire_co_analytics.listings b USING(id_customer)
+LEFT JOIN vestiaire_co_analytics.categories c USING(id_category)
+GROUP BY 1
+ORDER BY 2
+);

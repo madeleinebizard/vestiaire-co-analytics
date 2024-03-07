@@ -1,0 +1,42 @@
+-- Median number of clicks made on listing form for submitted products
+
+-- Get first date at which a product was submitted  
+WITH submitted_products AS (
+    SELECT
+        id,
+        MIN(date_completed) AS first_timestamp_completed_listing
+    FROM vestiaire_co_analytics.listings
+    WHERE date_completed IS NOT NULL
+    GROUP BY id
+),
+
+-- Count clicks 
+  -- Only considering some event_action that seem to come from the listing form
+  -- And that occured after the product was submitted for the first time
+clicks AS (
+    SELECT
+        a.id AS id_user,
+        COUNT(b.event_action) AS nb_clicks
+    FROM submitted_products a
+    LEFT JOIN vestiaire_co_analytics.clicks b ON a.id = CAST(LEFT(b.id_product::text, POSITION('.' IN b.id_product::text) - 1) AS integer)
+    WHERE b.datetime_session > a.first_timestamp_completed_listing
+    AND b.event_action IN (
+        'start photos',
+        'add photo',
+        'confirm photos',
+        'upload photo',
+        'dismiss photo dialog',
+        'create draft',
+        'delete draft',
+        'select condition',
+        'select universe',
+        'start condition & price',
+        'confirm condition & price',
+        'dismiss confirmation dialog'
+    )
+    GROUP BY a.id
+)
+
+SELECT 
+  PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY nb_clicks) AS median
+FROM clicks;
