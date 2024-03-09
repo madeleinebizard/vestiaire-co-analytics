@@ -1,5 +1,5 @@
+-- listings
 DROP TABLE IF EXISTS vestiaire_co_analytics.listings;
-
 CREATE TABLE vestiaire_co_analytics.listings (
     ID INT,
     ID_CUSTOMER VARCHAR,

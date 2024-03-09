@@ -1,5 +1,5 @@
 -- Per seller: date of their first listing, date of their last listing, date of last sale and name of last action (completed list / sale)
-
+-- c
 WITH listings AS (
     SELECT
         -- reminder : a seller is a user that completed at least one listing

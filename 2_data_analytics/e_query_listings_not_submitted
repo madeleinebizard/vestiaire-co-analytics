@@ -1,4 +1,5 @@
 -- Per product that was not submitted : last seller's action on listing form
+-- e
 
 -- Products not submitted
 WITH products AS (
@@ -13,6 +14,7 @@ WITH products AS (
     WHERE date_completed IS NULL
     AND date_sold IS NULL
 ),
+
 action AS ( 
     SELECT
         a.id_seller,

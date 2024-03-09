@@ -1,5 +1,5 @@
--- b) Per customer, if True or False they listed items in Clothing, Bags, Shoes and Accessories categories
-
+-- Per customer, if True or False they listed items in Clothing, Bags, Shoes and Accessories categories
+-- b
 SELECT
     id_customer,
     CASE WHEN listed_items > 0 THEN TRUE ELSE FALSE END AS listed_items

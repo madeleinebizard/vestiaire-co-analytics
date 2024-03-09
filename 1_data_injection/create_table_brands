@@ -1,10 +1,9 @@
+-- brands
 DROP TABLE IF EXISTS vestiaire_co_analytics.brands;
-
 CREATE TABLE vestiaire_co_analytics.brands (
     ID_BRAND INT,
     BRAND VARCHAR
 );
-
 UPDATE vestiaire_co_analytics.brands
 SET 
     BRAND = INITCAP(LOWER(REGEXP_REPLACE(BRAND, '[^a-zA-Z0-9 ]', '', 'g')));

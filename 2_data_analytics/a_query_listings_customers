@@ -1,5 +1,5 @@
 -- Per customer, show number of total listings started, listings completed and listings sold; order by listings started descending
-
+-- a
 WITH base AS (
     SELECT
     a.id_customer,
@@ -11,6 +11,7 @@ WITH base AS (
     WHERE b.date_created IS NOT NULL
     GROUP BY 1
 ) 
+
 SELECT
     id_customer,
     listing_started,

@@ -1,4 +1,5 @@
 -- Median number of clicks made on listing form for submitted products
+--d
 
 -- Get first date at which a product was submitted  
 WITH submitted_products AS (
@@ -35,6 +36,8 @@ clicks AS (
     )
     GROUP BY a.id
 )
+
 SELECT 
-  PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY nb_clicks) AS median
+    id_user
+    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY nb_clicks) AS median
 FROM clicks;

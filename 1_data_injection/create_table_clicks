@@ -1,7 +1,5 @@
-COPY vestiaire_co_analytics.clicks (DATETIME_SESSION, ID_USER, ID_PRODUCT, EVENT_CATEGORY, EVENT_ACTION, EVENT_LABEL) FROM '/Users/madeleinebizard/Desktop/vestiaire-co-app/Skills_Test_Product_Data_Analyst/clicks.csv' DELIMITER ',' CSV HEADER;
-
+-- clicks
 DROP TABLE IF EXISTS vestiaire_co_analytics.clicks; 
-
 CREATE TABLE vestiaire_co_analytics.clicks (
     DATETIME_SESSION TIMESTAMP,
     ID_USER VARCHAR,
@@ -10,10 +8,8 @@ CREATE TABLE vestiaire_co_analytics.clicks (
     EVENT_ACTION VARCHAR,
     EVENT_LABEL VARCHAR
 );
-
 ALTER TABLE vestiaire_co_analytics.clicks
 ADD COLUMN LISTING_ACTION VARCHAR;
-
 UPDATE vestiaire_co_analytics.clicks
 SET 
   EVENT_LABEL = REGEXP_REPLACE(EVENT_LABEL, '[^a-zA-Z0-9 ]', '', 'g'),
