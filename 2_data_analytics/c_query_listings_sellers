@@ -12,7 +12,6 @@ WITH listings AS (
     WHERE a.id_seller IS NOT NULL
     GROUP BY 1
 ),
-
 clicks AS (
     SELECT 
         *
@@ -27,7 +26,6 @@ clicks AS (
     )
 WHERE datetime_row_number = 1
 )
-
 SELECT
     a.id_seller,
     a.first_listing,

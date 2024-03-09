@@ -10,8 +10,7 @@ WITH base AS (
     LEFT JOIN vestiaire_co_analytics.listings b USING(id_customer)
     WHERE b.date_created IS NOT NULL
     GROUP BY 1
-)
-
+) 
 SELECT
     id_customer,
     listing_started,

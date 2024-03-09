@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS vestiaire_co_analytics.categories; 
+
 CREATE TABLE vestiaire_co_analytics.categories (
     ID_CATEGORY INT,
     CATEGORY VARCHAR

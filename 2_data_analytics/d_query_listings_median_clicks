@@ -9,7 +9,6 @@ WITH submitted_products AS (
     WHERE date_completed IS NOT NULL
     GROUP BY id
 ),
-
 -- Count clicks 
   -- Only considering some event_action that seem to come from the listing form
   -- And that occured after the product was submitted for the first time
@@ -36,7 +35,6 @@ clicks AS (
     )
     GROUP BY a.id
 )
-
 SELECT 
   PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY nb_clicks) AS median
 FROM clicks;

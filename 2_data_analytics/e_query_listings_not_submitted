@@ -13,7 +13,6 @@ WITH products AS (
     WHERE date_completed IS NULL
     AND date_sold IS NULL
 ),
-
 action AS ( 
     SELECT
         a.id_seller,
@@ -28,7 +27,6 @@ action AS (
     LEFT JOIN vestiaire_co_analytics.clicks c ON a.id_seller = c.id_user AND b.id_product = CAST(LEFT(c.id_product::text, POSITION('.' IN c.id_product::text) - 1) AS integer)
     WHERE c.listing_action = 'true'
 )
-
 SELECT 
     id_seller,
     id_product AS id_product_unsbumitted,
