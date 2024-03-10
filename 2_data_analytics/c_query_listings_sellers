@@ -10,7 +10,7 @@ WITH listings AS (
     FROM vestiaire_co_analytics.users a
     LEFT JOIN vestiaire_co_analytics.listings b ON a.id_seller = b.id_customer
     WHERE a.id_seller IS NOT NULL
-    GROUP BY 1
+    GROUP BY a.id_seller
 ),
 clicks AS (
     SELECT 
@@ -22,7 +22,7 @@ clicks AS (
         datetime_session,
         ROW_NUMBER() OVER (PARTITION BY id_user ORDER BY datetime_session DESC) AS datetime_row_number
     FROM vestiaire_co_analytics.clicks
-    ORDER BY 1, 4
+    ORDER BY id_user, 4
     )
 WHERE datetime_row_number = 1
 )

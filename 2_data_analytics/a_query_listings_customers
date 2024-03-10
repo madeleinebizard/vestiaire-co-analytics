@@ -4,15 +4,14 @@
 WITH base AS (
     SELECT
     a.id_customer,
-    COUNT(b.date_created) AS listing_started,
-    COUNT(b.date_completed) AS listing_completed,
-    COUNT(b.date_sold) AS listing_sold
+    COUNT(distinct case when b.date_created is not null then b.id else NULL end) AS listing_started,
+    COUNT(distinct case when b.date_completed is not null then b.id else NULL end) AS listing_completed,
+    COUNT(distinct case when b.date_sold is not null then b.id else NULL end) AS listing_sold
     FROM vestiaire_co_analytics.users a
     LEFT JOIN vestiaire_co_analytics.listings b USING(id_customer)
     WHERE b.date_created IS NOT NULL
-    GROUP BY 1
+    GROUP BY a.id_customer
 ) 
-
 SELECT
     id_customer,
     listing_started,

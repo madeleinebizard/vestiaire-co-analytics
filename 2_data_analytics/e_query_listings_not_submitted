@@ -27,7 +27,7 @@ action AS (
     FROM vestiaire_co_analytics.users a
     LEFT JOIN products b ON a.id_seller = b.id_customer
     LEFT JOIN vestiaire_co_analytics.clicks c ON a.id_seller = c.id_user AND b.id_product = CAST(LEFT(c.id_product::text, POSITION('.' IN c.id_product::text) - 1) AS integer)
-    WHERE c.listing_action = 'true'
+    WHERE c.listing_action = true
 )
 SELECT 
     id_seller,
@@ -37,4 +37,4 @@ SELECT
     event_action AS last_seller_action
 FROM action
 WHERE row_nb = 1
-ORDER BY 5;
+ORDER BY event_action;

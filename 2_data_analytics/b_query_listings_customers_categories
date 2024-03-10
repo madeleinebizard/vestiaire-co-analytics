@@ -10,6 +10,6 @@ SELECT
 FROM vestiaire_co_analytics.users a
 LEFT JOIN vestiaire_co_analytics.listings b USING(id_customer)
 LEFT JOIN vestiaire_co_analytics.categories c USING(id_category)
-GROUP BY 1
+GROUP BY a.id_customer
 ORDER BY 2
 );
