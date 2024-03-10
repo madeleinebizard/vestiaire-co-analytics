@@ -7,4 +7,3 @@ CREATE TABLE vestiaire_co_analytics.brands (
 UPDATE vestiaire_co_analytics.brands
 SET 
     BRAND = INITCAP(LOWER(REGEXP_REPLACE(BRAND, '[^a-zA-Z0-9 ]', '', 'g')));
-
