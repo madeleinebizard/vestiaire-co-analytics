@@ -1,6 +1,1 @@
-{
-    "scripts": {
-      "start": "node server.js"
-    }
-  }
-  
+{"name": "vestiaire-co-app", "description": "technical test for vestiaire collective"}
